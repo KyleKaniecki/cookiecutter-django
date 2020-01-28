@@ -60,6 +60,17 @@ def remove_docker_files():
     for file_name in file_names:
         os.remove(file_name)
 
+def remove_channels_files():
+    # Remove the channels directory
+    shutil.rmtree("{{ cookiecutter.project_slug }}/{{ cookiecutter.project_slug }}/channels")
+    # Remove some channels files
+    file_names = [
+        os.path.join("config","asgi.py"),
+        os.path.join("config","routing.py"),
+    ]
+    for file_name in file_names:
+        os.remove(file_name)
+
 
 def remove_utility_files():
     shutil.rmtree("utility")

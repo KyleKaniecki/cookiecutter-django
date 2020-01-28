@@ -1,0 +1,28 @@
+{% extends "admin/base_site.html" %}
+{% load staticfiles %}
+{% block extrastyle %}
+{{block.super}}
+<style>
+  body::before {
+      content: "{{ENVIRONMENT_NAME}}";
+      display: block;
+      text-align: center;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: white;
+      line-height: 35px;
+      font-size: 150%;
+      width: 100%;
+      background-color: {{ENVIRONMENT_COLOR}};
+  }
+</style>
+{% endblock %}
+{% block branding %}
+<a href="{% url 'admin:index' %}">
+  <img
+    src="{% static 'Skirmish-small.png' %}"
+    height="40px"
+    alt="Skirmish Admin Console"
+  />
+</a>
+{% endblock %}

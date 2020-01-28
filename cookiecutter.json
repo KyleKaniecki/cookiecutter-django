@@ -36,6 +36,7 @@
   "custom_bootstrap_compilation": "n",
   "use_compressor": "n",
   "use_celery": "n",
+  "use_channels":"n",
   "use_mailhog": "n",
   "use_sentry": "n",
   "use_whitenoise": "n",
@@ -46,6 +47,5 @@
     "Gitlab"
   ],
   "keep_local_envs_in_vcs": "y",
-
   "debug": "n"
 }

@@ -3,11 +3,7 @@
 Werkzeug==0.16.0 # https://github.com/pallets/werkzeug
 ipdb==0.12.3  # https://github.com/gotcha/ipdb
 Sphinx==2.3.1  # https://github.com/sphinx-doc/sphinx
-{%- if cookiecutter.use_docker == 'y' %}
-psycopg2==2.8.4 --no-binary psycopg2  # https://github.com/psycopg/psycopg2
-{%- else %}
 psycopg2-binary==2.8.4  # https://github.com/psycopg/psycopg2
-{%- endif %}
 
 # Testing
 # ------------------------------------------------------------------------------
@@ -31,7 +27,12 @@ pre-commit==1.21.0  # https://github.com/pre-commit/pre-commit
 # ------------------------------------------------------------------------------
 factory-boy==2.12.0  # https://github.com/FactoryBoy/factory_boy
 
-django-debug-toolbar==2.1  # https://github.com/jazzband/django-debug-toolbar
+# Django Rest Framework
+# ------------------------------------------------------------------------------
+django-silk==3.0.1
+
+# Django extensions
+# ------------------------------------------------------------------------------
 django-extensions==2.2.6  # https://github.com/django-extensions/django-extensions
 django-coverage-plugin==1.8.0  # https://github.com/nedbat/django_coverage_plugin
 pytest-django==3.8.0  # https://github.com/pytest-dev/pytest-django

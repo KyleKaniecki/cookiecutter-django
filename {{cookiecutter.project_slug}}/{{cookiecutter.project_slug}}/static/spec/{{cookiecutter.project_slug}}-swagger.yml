@@ -1,0 +1,31 @@
+openapi: 3.0.0
+info:
+  title: {{cookiecutter.project_name}} API
+  description: >
+    {{cookiecutter.project_name}}'s Public API
+  version: 0.0.1
+  contact:
+    name: {{cookiecutter.author_name}}
+    email: {{cookiecutter.email}}
+    
+servers:
+  - url: https://api.{{cookiecutter.domain_name}}
+  
+paths:
+  # Your paths
+
+components:
+  schemas:
+    $ref:
+      # Your schemas / models
+      # - "./accounts/definitions.yml"
+      
+  securitySchemes:
+    Request Authentication: # arbitrary name for the security scheme
+      description: >
+        How you authenticate with {{cookiecutter.project_name}} for a request as a user
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - Request Authentication: []

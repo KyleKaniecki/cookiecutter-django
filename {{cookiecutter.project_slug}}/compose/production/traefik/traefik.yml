@@ -1,6 +1,15 @@
 log:
   level: INFO
 
+api:
+  dashboard: true
+
+providers:
+  # https://docs.traefik.io/master/providers/file/
+  file:
+    filename: /etc/traefik/traefik.yml
+    watch: true
+
 entryPoints:
   web:
     # http
@@ -9,6 +18,9 @@ entryPoints:
   web-secure:
     # https
     address: ":443"
+
+  api-port:
+    address: ":8080"
 
 certificatesResolvers:
   letsencrypt:
@@ -30,7 +42,6 @@ http:
         - redirect
         - csrf
       service: django
-
     web-secure-router:
       rule: "Host(`{{ cookiecutter.domain_name }}`)"
       entryPoints:
@@ -38,9 +49,17 @@ http:
       middlewares:
         - csrf
       service: django
-      tls:
-        # https://docs.traefik.io/master/routing/routers/#certresolver
-        certResolver: letsencrypt
+      # tls:
+      # https://docs.traefik.io/master/routing/routers/#certresolver
+      # certResolver: letsencrypt
+
+    api:
+      rule: PathPrefix(`/api`) || PathPrefix(`/dashboard`)
+      entryPoints:
+        - api-port
+      middlewares:
+        - csrf
+      service: api@internal
 
   middlewares:
     redirect:
@@ -52,16 +71,10 @@ http:
       # https://docs.traefik.io/master/middlewares/headers/#hostsproxyheaders
       # https://docs.djangoproject.com/en/dev/ref/csrf/#ajax
       headers:
-        hostsProxyHeaders: ['X-CSRFToken']
+        hostsProxyHeaders: ["X-CSRFToken"]
 
   services:
     django:
       loadBalancer:
         servers:
           - url: http://django:5000
-
-providers:
-  # https://docs.traefik.io/master/providers/file/
-  file:
-    filename: /etc/traefik/traefik.yml
-    watch: true
