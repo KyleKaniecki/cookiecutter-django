@@ -73,7 +73,7 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # "django.contrib.humanize", # Handy template tags
-    "{{ cookiecutter.project_slug }}.apps.admin",
+    "{{ cookiecutter.project_slug }}.apps.{{ cookiecutter.project_name }}AdminConfig",
 ]
 THIRD_PARTY_APPS = [
     "rest_framework",
@@ -110,11 +110,9 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
-AUTH_USER_MODEL = "YOUR USER MODEL HERE"
-# https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
-LOGIN_REDIRECT_URL = "users:redirect"
-# https://docs.djangoproject.com/en/dev/ref/settings/#login-url
-LOGIN_URL = "account_login"
+AUTH_USER_MODEL = ""
+if not AUTH_USER_MODEL:
+    raise Exception("You must specify or create an Auth user model")
 
 # PASSWORDS
 # ------------------------------------------------------------------------------

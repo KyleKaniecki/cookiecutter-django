@@ -1,0 +1,79 @@
+version: '3'
+
+volumes:
+  staging_postgres_data: {}
+  staging_postgres_data_backups: {}
+  staging_traefik: {}
+
+services:
+  django:{% if cookiecutter.use_celery == 'y' %} &django{% endif %}
+    build:
+      context: .
+      dockerfile: ./compose/staging/django/Dockerfile
+    image: {{ cookiecutter.project_slug }}_staging_django
+    depends_on:
+      - postgres
+      - redis
+    env_file:
+      - ./.envs/.staging/.django
+      - ./.envs/.staging/.postgres
+    command: /start
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/staging/postgres/Dockerfile
+    image: {{ cookiecutter.project_slug }}_staging_postgres
+    volumes:
+      - staging_postgres_data:/var/lib/postgresql/data
+      - staging_postgres_data_backups:/backups
+    env_file:
+      - ./.envs/.staging/.postgres
+
+  traefik:
+    build:
+      context: .
+      dockerfile: ./compose/staging/traefik/Dockerfile
+    image: {{ cookiecutter.project_slug }}_staging_traefik
+    depends_on:
+      - django
+    volumes:
+      - staging_traefik:/etc/traefik/acme
+    ports:
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"
+      - "0.0.0.0:8080:8080"
+
+  redis:
+    image: redis:5.0
+  {%- if cookiecutter.use_celery == 'y' %}
+
+  celeryworker:
+    <<: *django
+    image: {{ cookiecutter.project_slug }}_staging_celeryworker
+    command: /start-celeryworker
+
+  celerybeat:
+    <<: *django
+    image: {{ cookiecutter.project_slug }}_staging_celerybeat
+    command: /start-celerybeat
+
+  flower:
+    <<: *django
+    image: {{ cookiecutter.project_slug }}_staging_flower
+    ports:
+      - "5555:5555"
+    command: /start-flower
+
+  {%- endif %}
+
+  {% if cookiecutter.cloud_provider == 'AWS' %}
+  awscli:
+    build:
+      context: .
+      dockerfile: ./compose/staging/aws/Dockerfile
+    env_file:
+      - ./.envs/.staging/.django
+    volumes:
+      - staging_postgres_data_backups:/backups
+  {%- endif %}
