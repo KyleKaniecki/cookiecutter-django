@@ -15,6 +15,7 @@ WARNING = "\x1b[1;33m [WARNING]: "
 INFO = "\x1b[1;33m [INFO]: "
 HINT = "\x1b[3;33m"
 SUCCESS = "\x1b[1;32m [SUCCESS]: "
+context = {{cookiecutter}}
 
 project_slug = "{{ cookiecutter.project_slug }}"
 if hasattr(project_slug, "isidentifier"):
@@ -68,3 +69,8 @@ if (
         "You should either use Whitenoise or select a Cloud Provider to serve static files"
     )
     sys.exit(1)
+
+# Take the name they gave us, and turn it into a title cased class name
+user_model_name = context['user_model_name'].encode("utf-8").strip()
+context['user_model_name'] = user_model_name.replace("_", ' ').replace('-', ' ').title().replace(' ', '')
+context['user_model_name_lower'] = user_model_name.lower().replace(' ', '')

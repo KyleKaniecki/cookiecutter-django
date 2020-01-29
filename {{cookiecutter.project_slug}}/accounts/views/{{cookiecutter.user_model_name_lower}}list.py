@@ -1,31 +1,27 @@
 from rest_framework.response import Response
 from django.db.models import Q
 
-from skirmish.utils import (
-    generate_custom_error_response,
-    create_list_dataset,
-    prepare_parameters,
-)
-from skirmish.views import SkirmishBaseListView
-from ..models import Player
-from ..serializers import PlayerSerializer
+
+from {{cookiecutter.project_slug}}.views import {{cookiecutter.project_name}}BaseListView
+from ..models import {{cookiecutter.user_model_name}}
+from ..serializers import {{cookiecutter.user_model_name}}Serializer
 
 
-class PlayerList(SkirmishBaseListView):
+class {{cookiecutter.user_model_name}}List({{cookiecutter.project_name}}BaseListView):
     def get(self, request, format=None):
-        players = Player.objects.filter(self.get_query_filter(request))
+        {{cookiecutter.user_model_name_lower}}s = {{cookiecutter.user_model_name}}.objects.filter(self.get_query_filter(request))
 
         page, page_length = self.get_pagination_info(request)
 
         return Response(
-            create_list_dataset(
-                [players], [PlayerSerializer], page, page_length=page_length
+            self.create_list_dataset(
+                [{{cookiecutter.user_model_name_lower}}s], [{{cookiecutter.user_model_name}}Serializer], page, page_length=page_length
             )
         )
 
     def get_query_filter(self, request) -> Q:
         query_filter = Q()
-        query_params = prepare_parameters(request.GET)
+        query_params = self.prepare_parameters(request.GET)
 
         if "username" in query_params:
             query_filter &= Q(username__icontains=query_params["username"])

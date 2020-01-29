@@ -8,7 +8,7 @@ urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
     path("accounts/", include("allauth.urls")),
-    path("api/v1/{{cookiecutter.user_model_name_lower}}s/", include("accounts.urls")),
+    path("api/v1/", include("accounts.urls")),
     # Your stuff: custom urls includes go here
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

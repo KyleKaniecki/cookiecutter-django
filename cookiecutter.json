@@ -36,7 +36,7 @@
   "custom_bootstrap_compilation": "n",
   "use_compressor": "n",
   "use_celery": "n",
-  "use_channels":"n",
+  "use_channels": "n",
   "use_mailhog": "n",
   "use_sentry": "n",
   "use_whitenoise": "n",
@@ -48,9 +48,8 @@
   ],
   "keep_local_envs_in_vcs": "y",
   "debug": "n",
-  "user_model": "User",
-  "user_model_name": "{{ cookiecutter.user_model|replace(' ', '_')|replace('-', '_')|replace('.', '_')|trim() }}",
-  "user_model_name_lower": "{{ cookiecutter.user_model.lower()|replace(' ', '_')|replace('-', '_')|replace('.', '_')|trim() }}",
+  "user_model_name": "User",
+  "user_model_name_lower": "{{ cookiecutter.user_model_name.lower()|replace(' ', '_')|replace('-', '_')|replace('.', '_')|trim() }}",
   "_copy_without_render": [
     "*.html"
   ]

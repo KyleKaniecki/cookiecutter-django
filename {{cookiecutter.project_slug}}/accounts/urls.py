@@ -10,8 +10,8 @@ from .views import (
 )
 
 urlpatterns = [
-    path("{{cookiecutter.user_model_name}}s/", {{cookiecutter.user_model_name}}List.as_view()),
-    path("{{cookiecutter.user_model_name}}s/<int:pk>/", {{cookiecutter.user_model_name}}Detail.as_view()),
+    path("{{cookiecutter.user_model_name_lower}}s/", {{cookiecutter.user_model_name}}List.as_view()),
+    path("{{cookiecutter.user_model_name_lower}}s/<int:pk>/", {{cookiecutter.user_model_name}}Detail.as_view()),
     path("auth/token/", ObtainTokenPairView.as_view()),
     path("auth/token/refresh/", TokenRefreshView.as_view()),
     path("password/reset/", PasswordReset.as_view()),

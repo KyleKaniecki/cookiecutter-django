@@ -4,12 +4,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from skirmish.constants import (
-    SUCCESS_RESPONSE,
-    ERR_PLAYER_NOT_FOUND,
-    ERR_TOKEN_NOT_VALID,
-)
-from accounts.models import Player
+from accounts.models import {{cookiecutter.user_model_name}}
 
 
 class PasswordResetConfirm(APIView):
@@ -18,20 +13,15 @@ class PasswordResetConfirm(APIView):
 
     def post(self, request, format=None):
         try:
-            player = Player.objects.get(id=int(request.data["id"]))
-        except (Player.DoesNotExist, ValueError):
-            return Response(
-                data={"errors": [ERR_PLAYER_NOT_FOUND]},
-                status=status.HTTP_404_NOT_FOUND,
-            )
+            {{cookiecutter.user_model_name_lower}} = {{cookiecutter.user_model_name}}.objects.get(id=int(request.data["id"]))
+        except ({{cookiecutter.user_model_name}}.DoesNotExist, ValueError):
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
-        valid = PasswordResetTokenGenerator().check_token(player, request.data["token"])
+        valid = PasswordResetTokenGenerator().check_token({{cookiecutter.user_model_name_lower}}, request.data["token"])
 
         if valid:
-            player.set_password(request.data["password"])
-            player.save()
-            return Response(data=SUCCESS_RESPONSE, status=status.HTTP_200_OK)
+            {{cookiecutter.user_model_name_lower}}.set_password(request.data["password"])
+            {{cookiecutter.user_model_name_lower}}.save()
+            return Response(status=status.HTTP_200_OK)
 
-        return Response(
-            data={"errors": [ERR_TOKEN_NOT_VALID]}, status=status.HTTP_400_BAD_REQUEST
-        )
+        return Response(status=status.HTTP_400_BAD_REQUEST)

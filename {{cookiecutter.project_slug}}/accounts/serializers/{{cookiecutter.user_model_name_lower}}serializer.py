@@ -7,7 +7,7 @@ class {{cookiecutter.user_model_name}}Serializer(serializers.ModelSerializer):
     username = serializers.CharField(read_only=True)
 
     class Meta:
-        model = Player
+        model = {{cookiecutter.user_model_name}}
         fields = (
             "id",
             "username",

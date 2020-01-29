@@ -92,6 +92,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
+    "accounts",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -332,7 +333,6 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 50,
     "DATE_INPUT_FORMATS": ["iso-8601", "%Y-%m-%d"],
-    "EXCEPTION_HANDLER": "{{cookiecutter.project_slug}}.error_handlers.{{cookiecutter.project_slug}}_view_exception_handler",
 }
 
 # https://github.com/davesque/django-rest-framework-simplejwt
