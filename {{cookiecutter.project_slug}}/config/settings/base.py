@@ -86,7 +86,7 @@ THIRD_PARTY_APPS = [
 {%- if cookiecutter.use_celery == 'y' %}
     "django_celery_beat",
 {%- endif %}
-{% if cookiecutter.use_channels == "y" -%}
+{%- if cookiecutter.use_channels == "y" %}
     "channels",
 {%- endif %}
 ]
@@ -95,7 +95,7 @@ LOCAL_APPS = [
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
-INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS 
+INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 
 # MIGRATIONS
 # ------------------------------------------------------------------------------
@@ -110,9 +110,7 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
-AUTH_USER_MODEL = ""
-if not AUTH_USER_MODEL:
-    raise Exception("You must specify or create an Auth user model")
+AUTH_USER_MODEL = "accounts.{{cookiecutter.user_model_name}}"
 
 # PASSWORDS
 # ------------------------------------------------------------------------------
